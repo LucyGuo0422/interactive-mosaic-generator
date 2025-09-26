@@ -22,34 +22,6 @@ class MosaicGenerator:
         self.tile_cache = {}
         self.color_matching_strength = 0.7
     
-    def setup_datasets():
-    """Download and extract dataset files from HuggingFace if not already present."""
-    datasets = {
-        "art_images": "art_images.tar.gz",
-        "object_images": "object_images.tar.gz", 
-        "people_images": "people_images.tar.gz"
-    }
-    
-    for folder_name, tar_name in datasets.items():
-        # Check if already extracted
-        if os.path.exists(f"./{folder_name}"):
-            continue
-            
-        try:
-            # Download from HuggingFace
-            tar_path = hf_hub_download(
-                repo_id="LucyGuo/Mosaic_tiles",
-                filename=tar_name,
-                repo_type="dataset",
-                cache_dir="./hf_cache"
-            )
-            
-            # Extract
-            with tarfile.open(tar_path, 'r:gz') as tar:
-                tar.extractall(".")
-            
-        except Exception as e:
-            print(f"Error setting up {folder_name}: {e}")
         
     def load_dataset(self):
         """Load and cache dataset features."""
@@ -228,6 +200,35 @@ class MosaicGenerator:
         
         # Smooth tile edges
         return self.smooth_edges(mosaic, grid_cells)
+
+def setup_datasets():
+    """Download and extract dataset files from HuggingFace if not already present."""
+    datasets = {
+        "art_images": "art_images.tar.gz",
+        "object_images": "object_images.tar.gz", 
+        "people_images": "people_images.tar.gz"
+    }
+    
+    for folder_name, tar_name in datasets.items():
+        # Check if already extracted
+        if os.path.exists(f"./{folder_name}"):
+            continue
+            
+        try:
+            # Download from HuggingFace
+            tar_path = hf_hub_download(
+                repo_id="LucyGuo/Mosaic_tiles",
+                filename=tar_name,
+                repo_type="dataset",
+                cache_dir="./hf_cache"
+            )
+            
+            # Extract
+            with tarfile.open(tar_path, 'r:gz') as tar:
+                tar.extractall(".")
+            
+        except Exception as e:
+            print(f"Error setting up {folder_name}: {e}")
 
 
 def create_adaptive_grid(image, min_size=8, max_size=64, threshold=500):
@@ -484,6 +485,6 @@ if __name__ == "__main__":
     app = create_interface()
     app.launch(
         server_name="0.0.0.0",
-        server_port=7860,
+        server_port=7861,
         share=False
     )
