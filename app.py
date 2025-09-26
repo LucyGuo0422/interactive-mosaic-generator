@@ -8,6 +8,7 @@ import pickle
 from pathlib import Path
 from tqdm import tqdm
 import tarfile
+import shutil
 from huggingface_hub import hf_hub_download
 
 
@@ -209,6 +210,29 @@ def setup_datasets():
         "people_images": "people_images.tar.gz"
     }
     
+    # Download example images
+    if not os.path.exists("./examples"):
+        os.makedirs("./examples")
+    
+    example_images = ["test_img1.jpg", "test_img2.jpg", "test_img3.jpg", 
+                      "test_img4.jpg", "test_img5.jpg"]
+    
+    for img_name in example_images:
+        img_path = f"./examples/{img_name}"
+        if not os.path.exists(img_path):
+            try:
+                downloaded_path = hf_hub_download(
+                    repo_id="LucyGuo/Mosaic_tiles",
+                    filename=f"examples/{img_name}",
+                    repo_type="dataset",
+                    cache_dir="./hf_cache"
+                )
+                # Copy to examples folder
+                import shutil
+                shutil.copy(downloaded_path, img_path)
+            except Exception as e:
+                print(f"Could not download example {img_name}: {e}")
+
     for folder_name, tar_name in datasets.items():
         # Check if already extracted
         if os.path.exists(f"./{folder_name}"):
