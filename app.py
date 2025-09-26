@@ -479,8 +479,7 @@ def create_interface():
 
 if __name__ == "__main__":
     # Setup datasets on first run
-    temp_generator = MosaicGenerator("./object_images")
-    temp_generator.setup_datasets()
+    setup_datasets()
     
     # Create and launch interface
     app = create_interface()
