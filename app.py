@@ -479,12 +479,9 @@ def create_interface():
 
 if __name__ == "__main__":
     # Setup datasets on first run
-    setup_datasets()
+    temp_generator = MosaicGenerator("./object_images")
+    temp_generator.setup_datasets()
     
     # Create and launch interface
     app = create_interface()
-    app.launch(
-        server_name="0.0.0.0",
-        server_port=7861,
-        share=False
-    )
+    app.launch()
