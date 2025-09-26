@@ -1,0 +1,7 @@
+opencv-python>=4.8.0
+numpy>=1.24.0
+gradio>=4.0.0
+Pillow>=9.5.0
+scikit-image>=0.21.0
+tqdm>=4.65.0
+huggingface-hub>=0.16.0
