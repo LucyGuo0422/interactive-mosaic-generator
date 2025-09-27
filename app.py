@@ -417,17 +417,19 @@ def create_interface():
                         info="Output image resolution"
                     )
                     
-                    min_cell_size = gr.Slider(
-                        8, 32, 8, step=8,
+                    min_cell_size = gr.Dropdown(
+                        choices=[4, 8, 16, 32],
+                        value=8,
                         label="Minimum Cell Size",
                         info="Smallest tile size in pixels"
-                    )
+)
                     
-                    max_cell_size = gr.Slider(
-                        32, 64, 64, step=16,
+                    max_cell_size = gr.Dropdown(
+                        choices=[8, 16, 32, 64, 128],
+                        value=64,
                         label="Maximum Cell Size",
                         info="Largest tile size in pixels"
-                    )
+)
                     
                     variance_threshold = gr.Slider(
                         100, 1000, 500, step=50, 
