@@ -407,13 +407,13 @@ def create_interface():
                     )
                     
                     min_cell_size = gr.Slider(
-                        4, 32, 8, step=4, 
+                        8, 32, 8, step=8,
                         label="Minimum Cell Size",
                         info="Smallest tile size in pixels"
                     )
                     
                     max_cell_size = gr.Slider(
-                        32, 128, 64, step=16, 
+                        32, 64, 64, step=16,
                         label="Maximum Cell Size",
                         info="Largest tile size in pixels"
                     )
