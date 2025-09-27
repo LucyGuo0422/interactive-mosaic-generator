@@ -103,17 +103,23 @@ class MosaicGenerator:
             return None
         
         target_avg = np.mean(target_region.reshape(-1, 3), axis=0)
-        best_distance = float('inf')
-        best_path = None
         
-        for img_path, features in self.dataset_features.items():
-            if features and features['avg_color'] is not None:
-                distance = np.linalg.norm(target_avg - features['avg_color'])
-                if distance < best_distance:
-                    best_distance = distance
-                    best_path = img_path
+        # Vectorized computation
+        if not hasattr(self, '_color_matrix'):
+            self._color_matrix = np.array([
+                features['avg_color'] 
+                for features in self.dataset_features.values() 
+                if features and features['avg_color'] is not None
+            ])
+            self._paths = [
+                path for path, features in self.dataset_features.items()
+                if features and features['avg_color'] is not None
+            ]
         
-        return best_path
+        distances = np.linalg.norm(self._color_matrix - target_avg, axis=1)
+        best_idx = np.argmin(distances)
+        
+        return self._paths[best_idx]
     
     def apply_color_transfer(self, tile, target):
         """Transfer color statistics from target to tile."""
@@ -347,7 +353,12 @@ def process_mosaic(input_image, target_size, min_cell_size, max_cell_size,
             input_image = np.array(input_image)
             input_image = cv2.cvtColor(input_image, cv2.COLOR_RGB2BGR)
         
-        image = cv2.resize(input_image, (target_size, target_size))
+        if target_size < input_image.shape[0]:  # Downscaling
+            image = cv2.resize(input_image, (target_size, target_size), 
+                            interpolation=cv2.INTER_AREA)
+        else:  # Upscaling
+            image = cv2.resize(input_image, (target_size, target_size), 
+                            interpolation=cv2.INTER_LINEAR)
         
         # Generate adaptive grid
         grid_cells = create_adaptive_grid(
