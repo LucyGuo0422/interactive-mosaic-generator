@@ -1,3 +1,14 @@
+---
+title: Interactive Image Mosaic Generator
+emoji: 🎨
+colorFrom: purple
+colorTo: pink
+sdk: gradio
+sdk_version: "4.44.1"
+app_file: app.py
+pinned: false
+---
+
 # 🎨 Interactive Image Mosaic Generator
 
 Transform any image into a beautiful mosaic artwork using advanced computer vision techniques and adaptive grid generation.
