@@ -44,9 +44,9 @@ The application will automatically download required datasets on first run and l
 
 The application uses three curated datasets that are automatically downloaded from HuggingFace Hub:
 
-- **Objects** (800+ categories): General objects, animals, and scenes
-- **Celebrity Faces** (13,000+ images): Human faces and portraits  
-- **Artwork Collection** (40+ artists): Classic and modern art pieces
+- **Objects** (102 categories, 9,144 images): General objects, animals, and scenes
+- **Celebrity Faces** (5,749 people, 13,233 images): Human faces and portraits  
+- **Artwork Collection** (51 artists, 8,774 images): Classic and modern art pieces
 
 > **Dataset Download**: On first run, the application will automatically download these datasets (~2-3GB total). The download progress will be shown in the terminal. Datasets are cached locally for faster subsequent runs.
 
@@ -126,9 +126,9 @@ clean-repo/
 ├── cache/                 # Feature cache for faster loading (auto-created)
 ├── hf_cache/             # HuggingFace dataset cache (auto-created)
 ├── examples/              # Sample images for testing (auto-downloaded)
-├── art_images/            # Artwork dataset (downloaded on first run)
-├── object_images/         # Objects dataset (downloaded on first run)
-└── people_images/         # Celebrity faces dataset (downloaded on first run)
+├── art_images/            # Artwork dataset (51 artists, 8,774 images)
+├── object_images/         # Objects dataset (102 categories, 9,144 images)
+└── people_images/         # Celebrity faces dataset (5,749 people, 13,233 images)
 ```
 
 > **Note**: The `art_images/`, `object_images/`, and `people_images/` directories are created automatically when you first run the application. They are not included in the GitHub repository due to size constraints.
